@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ExportPanel from "@/components/ExportPanel";
 import ImportPanel from "@/components/ImportPanel";
+import Logo from "@/components/Logo";
 
 interface Store {
   label: string;
@@ -98,8 +99,8 @@ export default function Home() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <div>
-          <h1 className="text-xl font-semibold text-gray-900">Ecommerce Admin</h1>
+        <div className="flex flex-col">
+          <Logo className="h-8 w-auto" />
           <p className="text-xs text-gray-500 mt-0.5">Multi-store product CSV import &amp; export</p>
         </div>
       </header>

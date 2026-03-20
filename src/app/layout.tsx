@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ecommerce Admin",
+  title: "Slemtech Admin",
   description: "Multi-store product CSV import/export",
 };
 
