@@ -47,7 +47,7 @@ export default function ExportPanel({ prefix, storeLabel }: Props) {
 
       <div className="mb-6 bg-gray-50 border border-gray-200 rounded-md p-4 text-sm">
         <p className="font-medium text-gray-700 mb-2">CSV columns:</p>
-        <div className="grid grid-cols-3 gap-1 text-gray-600">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 text-gray-600">
           {[
             "name", "slug", "sku", "description", "short_description",
             "price", "regular_price", "sale_price", "stock_status",

@@ -29,6 +29,9 @@ export default function Home() {
   // Delete confirm
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
+  // Mobile sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const loadStores = () =>
     fetch("/api/stores")
       .then((r) => r.json())
@@ -85,14 +88,33 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top bar */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-900">Ecommerce Admin</h1>
-        <p className="text-xs text-gray-500 mt-0.5">Multi-store product CSV import &amp; export</p>
+      <header className="bg-white border-b border-gray-200 px-4 py-4 flex items-center gap-3">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="md:hidden p-1.5 rounded-md text-gray-500 hover:bg-gray-100"
+          aria-label="Open sidebar"
+        >
+          <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <div>
+          <h1 className="text-xl font-semibold text-gray-900">Ecommerce Admin</h1>
+          <p className="text-xs text-gray-500 mt-0.5">Multi-store product CSV import &amp; export</p>
+        </div>
       </header>
 
       <div className="flex h-[calc(100vh-65px)]">
+        {/* Mobile backdrop */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 z-30 bg-black/30 md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
         {/* ── Sidebar ─────────────────────────────────────────── */}
-        <aside className="w-72 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col">
+        <aside className={`fixed md:static inset-y-0 left-0 z-40 w-72 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col transition-transform duration-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
 
           {/* Search */}
           <div className="p-3 border-b border-gray-100">
@@ -124,7 +146,7 @@ export default function Home() {
                           ? "border-blue-500 bg-blue-50"
                           : "border-transparent hover:bg-gray-50"
                       }`}
-                      onClick={() => { setSelectedPrefix(s.prefix); setCustomPrefix(""); }}
+                      onClick={() => { setSelectedPrefix(s.prefix); setCustomPrefix(""); setSidebarOpen(false); }}
                     >
                       <div className="min-w-0">
                         <p className={`text-sm font-medium truncate ${s.prefix === selectedPrefix ? "text-blue-700" : "text-gray-800"}`}>
@@ -225,7 +247,7 @@ export default function Home() {
         </aside>
 
         {/* ── Main content ─────────────────────────────────────── */}
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
           {!selectedPrefix ? (
             <div className="h-full flex items-center justify-center text-gray-400 text-sm">
               Select a store from the sidebar
@@ -240,7 +262,7 @@ export default function Home() {
                 </div>
 
                 {/* Custom prefix override */}
-                <div className="mt-3 flex items-center gap-2">
+                <div className="mt-3 flex flex-wrap items-center gap-2">
                   <label className="text-xs text-gray-500 whitespace-nowrap">Override prefix:</label>
                   <input
                     type="text"

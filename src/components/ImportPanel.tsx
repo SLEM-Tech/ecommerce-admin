@@ -179,7 +179,7 @@ export default function ImportPanel({ prefix }: Props) {
           <div className="bg-green-50 border-b border-gray-200 px-4 py-3">
             <p className="text-sm font-semibold text-green-800">Import complete</p>
           </div>
-          <div className="grid grid-cols-4 divide-x divide-gray-200">
+          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-200">
             {[
               { label: "Total", value: result.total },
               { label: "Inserted", value: result.inserted, color: "text-green-600" },
