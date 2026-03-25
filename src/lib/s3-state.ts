@@ -35,8 +35,9 @@ export async function readState(): Promise<StoresState> {
     if (!body) return { stores: [] };
     return JSON.parse(body) as StoresState;
   } catch (err: unknown) {
-    // NoSuchKey = file doesn't exist yet, return empty state
-    if ((err as { name?: string }).name === "NoSuchKey") return { stores: [] };
+    const code = (err as { name?: string; Code?: string }).name ?? (err as { Code?: string }).Code;
+    // NoSuchKey = file doesn't exist yet; AccessDenied = misconfigured creds/policy
+    if (code === "NoSuchKey" || code === "AccessDenied") return { stores: [] };
     throw err;
   }
 }
